@@ -1,4 +1,6 @@
 
+# DBL_EPSILON - jest to dokładność dla liczb zmiennoprzecinkowych
+# dla Float64 jest to 2.2204460492503131e-16
 DBL_EPSILON = 2.2204460492503131e-16
 
 function DIFFSIGN(x::Float64, y::Float64)
@@ -10,7 +12,7 @@ function DIFFSIGN(x::Float64, y::Float64)
 end
 
 function fun(x::Float64)
-    return (1.0 / (x - 3.0)) - 6.0
+    return 1.0 / (x - 3.0) - 6.0
 end
 
 function between(x::Float64, a::Float64, b::Float64)
@@ -23,7 +25,7 @@ end
 
 function lfun(b::Float64, a::Float64, fb::Float64, fa::Float64)
     if fb != fa
-        return b - fb*(b - a) / (fb - fa) # secant method
+        return b - fb*(b - a) / (fb - fa) # metoda siecznych
     elseif fa != 0
         return Inf
     else
@@ -40,7 +42,7 @@ function hfun(b::Float64, c::Float64)
 end
 
 function mfun(b::Float64, c::Float64)
-    return 0.5*(b + c) # bisection method
+    return 0.5*(b + c) # metoda bisekcji
 end
 
 function vfun(l::Float64, b::Float64, c::Float64)
@@ -57,6 +59,26 @@ function vfun(l::Float64, b::Float64, c::Float64)
 end
 
 function DekkerA(x0::Float64, x1::Float64, Eps::Float64)
+    """
+    b - ostatnie przyblizenie wyniku
+    c - kontrapunkt b, punkt w którym funkcja f ma przeciwny znak niż w punkcie b
+    a – poprzednia wartość punktu a, używana do wyliczania następnego punktu metodą siecznych
+    
+    Metoda bisekcji z punktów b i c tworzy punkt m pomiędzy nimi na środku przedziału.
+    
+    Wyliczany jest ciąg xi, którego ostatni element oznaczany jest przez x, a poprzedni przez xp.
+    
+    xk - ostatni punkt w ciągu, który ma różny znak niż x.
+    
+    Punkt x wyliczany jest dwoma metodami:
+        - siecznych
+        - bisekcji
+    i wybierany jest ten obliczony z metody siecznych jeśli leży pomiędzy punktem b
+    (ze względów dokładnościowych z pewną poprawką) a punktem m wyliczonym z bisekcji.
+
+    Jeżeli f(x) czy f(xk) leży bliżej zera i jeśli f(x) leży bliżej zera
+    wtedy b ma wartość x, c ma wartość xk, w przeciwnym razie zamiana.
+    """
     fxp = fun(x0)
     fx = fun(x1)
     
