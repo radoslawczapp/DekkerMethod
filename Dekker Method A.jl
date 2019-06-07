@@ -10,8 +10,7 @@ function DIFFSIGN(x::Float64, y::Float64)
 end
 
 function fun(x::Float64)
-#     return (x + 3)*(x - 1)^2
-    return (1 / (x - 3)) - 6
+    return (1.0 / (x - 3.0)) - 6.0
 end
 
 function between(x::Float64, a::Float64, b::Float64)
@@ -57,7 +56,7 @@ function vfun(l::Float64, b::Float64, c::Float64)
     end
 end
 
-function DekkerA(x0::Float64, x1::Float64, Eps::Float64)    
+function DekkerA(x0::Float64, x1::Float64, Eps::Float64)
     fxp = fun(x0)
     fx = fun(x1)
     
@@ -108,6 +107,6 @@ function DekkerA(x0::Float64, x1::Float64, Eps::Float64)
     return b
 end
 
-# result = DekkerA(-4, 4/3, 1e-12)
-result = DekkerA(3.01, 4, 1e-12)
+println("f(x) = 1/(x-3)-6\n")
+result = DekkerA(3.01, 4.0, 1e-12)
 println("x0 = ", result)
