@@ -45,20 +45,6 @@ end
 function mfun(b, c)
     return 0.5*(b + c) # metoda bisekcji
 end
-"""
-function vfun(l::Float64, b::Float64, c::Float64)
-    h = hfun(b, c)
-    m = mfun(b, c)
-    
-    if between(l, h, m) == true
-        return l
-    elseif abs(l - b) <= abs(b*DBL_EPSILON)
-        return h
-    else
-        return m
-    end
-end
-"""
 
 function wfun(l, b, c)
     h = hfun(b, c)
